@@ -1,0 +1,12 @@
+\chapter[BONUS and Conclusion]{\uline{BONUS and Conclusion}}
+
+\textbf{Summary} :
+In the first part of the problem we had proven that the fin problem has a solution garanted by lax-Milgram. The solution can be deternined by the finite element method but it's time comsuming especially because it is a design problem. So in the linear compliant case for instance, one has to change the parameters set $\mu \in D$ for each iteration at cost $O(\cal N)$. Then, online forming and solving $A_N(\mu)$ at cost $O(Q \cal {N}^2) + O(\cal {N}^3)$. This is why the reduced basis was introduced in part 2 in order to reduce the online computing independent on $\cal N >> N $.
+
+The condition number of a function measures how much the output value of the function can change for a small change in the input argument. This is used to measure how sensitive a function is to changes or errors in the input, and how much error in the output results from an error in the input. Thus the importance of the condition number.
+
+\textbf{Bonus} :
+
+I think the idea is to write $\Omega_i \, i=1,..,4$ as dependant to t and L. In that case, $\Omega_i = [0,t]\times [0,L] \, i=1,..,4$ and $\Omega_0 = [0,t_0]\times [0,L_0]$ and $\Gamma/\Gamma_{root} = [0,C_0]$ all devided by the circonference of the root. We proceed to vraiable change and we obtain an additional multiplication of $t \times L$ included in the affine decomposition equation as follows:
+\equaframe{ A_{N}(\mu) =   t_0 \times L_0 \Theta^0(\mu)   A_{N}^0+ \sum_{q=1}^4  t \times L \Theta^q(\mu)   A_{N}^q + circonference_{\Gamma/\Gamma_{root}}\Theta^5(\mu)   A_{N}^5}{}
+all devided by the circonference of the root.

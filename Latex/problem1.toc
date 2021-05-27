@@ -1,0 +1,14 @@
+\contentsline {chapter}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {1.1}Fin design parameters}{3}
+\contentsline {section}{\numberline {1.2}Governing equation}{4}
+\contentsline {section}{\numberline {1.3}Boundary conditions}{4}
+\contentsline {chapter}{\numberline {2}Finite Element Approximation}{5}
+\contentsline {section}{\numberline {2.1}Question a: The variational formulation}{5}
+\contentsline {section}{\numberline {2.2}Question b: Lax-Milgram theorem application}{6}
+\contentsline {chapter}{\numberline {3}Reduced-Basis Approximation}{8}
+\contentsline {section}{\numberline {3.1}Question a: Best solution approximation in the reduced-basis space}{9}
+\contentsline {section}{\numberline {3.2}Question b: Best output approximation in the reduced-basis space}{10}
+\contentsline {section}{\numberline {3.3}Question c: Large scale and reduced-order model}{11}
+\contentsline {section}{\numberline {3.4}Question d: Parametric coercivity}{12}
+\contentsline {section}{\numberline {3.5}Question e: Bounded condition number}{13}
+\contentsline {chapter}{\numberline {4}BONUS and Conclusion}{15}

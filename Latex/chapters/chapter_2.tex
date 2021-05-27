@@ -1,0 +1,123 @@
+\chapter[Finite Element Approximation]{\uline{Finite Element Approximation:}}
+We saw in class that the reduced basis approximation is based on a truth finite element approximation of the exact (or analytic) problem statement. To begin, we have to show that the exact problem described above does indeed satisfy the affine parameter dependence and thus fits into the framework shown in class.
+
+\section[Question a: The variational formulation]{\uline{The variational formulation:}}
+We start from the governing equation:
+\equaframe{ -k^i \Delta u^i = 0 \quad in \quad \Omega^i , i = 0, . . . , 4,}{(1)}
+We consider: $\omega=u^i$ on $\Omega^i$ with $\omega \in \mathbb{H}^1(\Omega)$,Then equation (1) implies:
+ \equaframe{ -k^i \Delta \omega . v = 0 \quad \forall v \in \mathbb{H}^1(\Omega)}{}
+We integrate:
+ \equaframe{\int_{\Omega} -k^i \Delta \omega . v dA = 0 \quad \forall v \in \mathbb{H}^1(\Omega)}{}
+And after applying the Green formula:
+ \equaframe{ \int_{\Omega} k^i \nabla \omega . \nabla v dA - \int_{\Gamma} k^i \nabla \omega . n^i . v dS = 0 \quad \forall v \in \mathbb{H}^1(\Omega)}{}
+Knowing that $\Gamma = \Gamma_{ / \Gamma_{root}} \cup \Gamma_{root}$:
+ \equaframe{ \int_{\Omega} k^i \nabla \omega . \nabla v dA 
+ - \int_{\Gamma_{/\Gamma_{root}}} k^i \nabla \omega . n^i . v dS
+ -\int_{\Gamma_{root}} k^0 \nabla \omega . n^0 . v dS
+  = 0 \quad \forall v \in \mathbb{H}^1(\Omega)}{}
+We use Boundary conditions (4) and (5) to obtain:
+ \equaframe{ \int_{\Omega} k^i \nabla \omega . \nabla v dA 
+ + \int_{\Gamma_{/\Gamma_{root}}} Bi \omega . v dS
+ -\int_{\Gamma_{root}} v dS
+  = 0 \quad \forall v \in \mathbb{H}^1(\Omega)}{}
+We seperate $\Omega$ into to 5 subdomains:
+ \equaframe{ \sum_{i=0}^4 \int_{\Omega^i} k^i \nabla \omega . \nabla v dA 
+ + Bi \int_{\Gamma_{/\Gamma_{root}}} \omega . v dS
+  = \int_{\Gamma_{root}} v dS 
+  \quad \forall v \in \mathbb{H}^1(\Omega)}{}
+Then we identify the above equation to the following one:
+ \equaframe{ a(\omega, v; \mu) = l(v) 
+  \quad \forall v \in \mathbb{H}^1(\Omega)}{(7)}
+With:
+\begin{gather*}
+   \equaframe{ a(\omega, v; \mu) = \sum_{i=0}^4 \int_{\Omega^i} k^i \nabla \omega . \nabla v dA 
+ + Bi\int_{\Gamma_{/\Gamma_{root}}} \omega . v dS
+  }{}
+\\ 
+   \equaframe{  l(v) = \int_{\Gamma_{root}} v dS 
+  }{}
+\end{gather*}
+
+\section[Question b: Lax-Milgram theorem application]{\uline{Lax-Milgram theorem application:}}
+ 
+\textbf{Is $a(., .; \mu)$ Bilinear and Symmetric?}: 
+
+In one hand:
+\equaframe{ a(u, v; \mu) = \sum_{i=0}^4 \int_{\Omega^i} k^i \nabla u. \nabla v dA 
+ + Bi\int_{\Gamma_{/\Gamma_{root}}} u . v dS
+ = a(v, u; \mu) 
+  }{}
+In the other hand:
+$a(., .; \mu)$ is a combination of bilinear functions, as integral and derivative are bilinear, so $a(., .; \mu)$ is bilinear.
+
+\textbf{Is $a(., .; \mu)$ Continuous?} : 
+
+$$\mid a(u, v; \mu)\mid = \mid \sum_{i=0}^4 \int_{\Omega^i} k^i \nabla u. \nabla v dA 
+ + Bi\int_{\Gamma_{/\Gamma_{root}}} u . v dS\mid$$
+ 
+The tiangular inequality gives:
+
+$$\mid a(u, v; \mu)\mid \,\leq  \int_{\Omega} k^i \mid \nabla u. \nabla v \mid dA 
+ + Bi\int_{\Gamma_{/\Gamma_{root}}} \mid u . v \mid dS$$
+ 
+The Cauchy-Schwarz inequality for all vectors u and v of an inner product space in both $\mathbb{L}(\Omega)$ and $\mathbb{L}(\Gamma)$ gives:
+$$\mid a(u, v; \mu)\mid \,\leq  {max(k^i)}_{i=0,..4} {\lVert{u}\rVert}_{\mathbb{H}^1(\Omega)}. {\lVert{v}\rVert}_{\mathbb{H}^1(\Omega)}
+ + Bi {\lVert{u}\rVert}_{\mathbb{L}(\Gamma)}. {\lVert{v}\rVert}_{\mathbb{L}(\Gamma)} $$
+Note that:
+$$\int_{\Omega}\mid \nabla u. \nabla v \mid dA \leq \int_{\Omega}\mid \nabla u \mid . \mid \nabla v \mid dA
++
+\int_{\Omega}\mid u \mid . \mid v \mid dA
+$$
+And the Trace theorem allows us to write with C $\geq 0$:
+$$\mid a(u, v; \mu)\mid \,\leq  {max(k^i)}_{i=0,..4} {\lVert{u}\rVert}_{\mathbb{H}^1(\Omega)}. {\lVert{v}\rVert}_{\mathbb{H}^1(\Omega)}
+ + C {\lVert{u}\rVert}_{\mathbb{L}(\Omega)}. {\lVert{v}\rVert}_{\mathbb{L}(\Omega)} $$
+Thanks the continuous integration of $\mathbb{H}^1(\Omega)$ in $\mathbb{L}^2(\Omega)$:
+
+$$ \exists \gamma(\mu) \geq 0, \mid a(u, v; \mu)\mid \,\leq 
+\gamma(\mu){\lVert{u}\rVert}_{\mathbb{H}^1(\Omega)}. 
+{\lVert{v}\rVert}_{\mathbb{H}^1(\Omega)}$$
+
+\textbf{Is $a(., .; \mu)$ coercive?} : 
+
+We assume that $a(., .; \mu)$ is not coercive! (reductio ad absurdum). Which means:
+
+
+$$\forall n, \exists u_n  \quad {\lVert{u_n}\rVert}_{\mathbb{H}^1(\Omega)} \,>  n\big(
+{\lVert{u_n}\rVert}_{\mathbb{L}^2(\Gamma)}
++
+{\lVert{\nabla u_n}\rVert}_{\mathbb{L}^2(\Omega)}
+\big)$$
+And then we consider the sequence:
+$$\frac {u_n} {{\lVert{u_n}\rVert}_{\mathbb{H}^1(\Omega)}}$$
+And we assume thus:
+$${\lVert{u_n}\rVert}_{\mathbb{H}^1(\Omega)}=1$$
+So the sequence is then bounded in ${\mathbb{H}^1(\Omega)}$ 
+And according to Rellich theorem, $\exists u_{n^{sub}}$ a subsequence $\in \mathbb{L}^2(\Omega)$ converging to u $\in \mathbb{H}^1(\Omega)$. Moreover ${\lVert{\nabla u_{n^{sub}}\rVert}_{\mathbb{L}^2(\Omega)}}$ converge to 0.
+Thus, $u_{n_{sub}}$ is a Cauchy sequence $\in \mathbb{H}^1(\Omega)$.
+We conclude that u is constante on each of the subdomains of $\Omega$. Given that the Trace application is continuous from $ \mathbb{H}^1(\Omega)$ to  $ \mathbb{L}^2(\Gamma)$ the Trace of u on $\Gamma$ is equal to the limit of all Traces of $u_{n^{sub}}$ on $\Gamma$. 
+
+However, $lim_n  {\lVert{u_{n^{sub}}}\rVert}_{\mathbb{H}^1(\Omega)}=0$. So u = 0 on $\Gamma$. Which is in contradiction to the fact that ${{\lVert{u_n}\rVert}_{\mathbb{H}^1(\Omega)}}=1$.
+
+Then we conclude that:
+$$ \exists \alpha(\mu)  \geq 0, \quad \mid a(u, u; \mu)\mid \,\geq \alpha(\mu){\lVert{u}\rVert}_{\mathbb{H}^1(\Omega)}$$
+All conditions of lax-Milgram are fulfilled, thus there is a single solution for the equation (7) and this solution minimize the following application:
+ \equaframe{ \mathbb {J}(\omega) = \frac {a(\omega, \omega; \mu)} {2} -l(\omega) 
+  \quad \forall \omega \in \mathbb{H}^1(\Omega)}{(8)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

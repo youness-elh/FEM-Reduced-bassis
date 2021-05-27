@@ -1,0 +1,180 @@
+\chapter[Reduced-Basis Approximation]{\uline{Reduced-Basis Approximation}}
+We now consider the linear finite element space:
+$$X^{\cal N} = {v \in \mathbb{H}^1(\Omega) |v|_{T_h } \in \mathbf{P}^1({\cal T}_h ), \forall T_h \in {\cal T}_h },$$
+and look for $u_{\cal N} (\mu) \in X^{\cal N}$ such that:
+\equaframe{ a(u_{\cal N}, v; \mu) = l(v) 
+  \quad \forall v \in X^{\cal N}}{(9)}
+our output of interest is then given by:
+\equaframe{ T_{root}^{\cal N}(\mu) = l^o(u_{\cal N})} {(10)}
+Applying our usual nodal basis, we arrive at the matrix equations:
+\equaframe{{ A}^{\cal N}u_{\cal N}(\mu) = F^{\cal N}} {(11)}
+\equaframe{ T_{root}^{\cal N}(\mu) = L_{\cal N}^T u_{\cal N}(\mu)} {(12)}
+here ${\cal N}$ is the dimension of the finite element space $X^{\cal N}$ , which (given our natural boundary conditions) is equal to the number of nodes in ${\cal T}_h $.
+
+In general, the dimension of the finite element space, dim X = ${\cal N}$  , will be quite large (in particular if we were to treat the more realistic three-dimensional fin
+problem), and thus the solution of $A^{\cal N} u_{\cal N} (\mu) = F^{\cal N}$ can be quite expensive. We thus investigate the reduced-basis methods that allow us to accurately and
+very rapidly predict $T_{root}^{\cal N} (\mu)$ in the limit of many evaluations that is, at many different values of $\mu$ which is precisely the limit of interest in design and optimization studies. To derive the reduced-basis approximation we shall exploit the energy principle,
+\equaframe{ u_{\cal N} (\mu)  = argmin_{\omega \in X^{\cal N}} \mathbb {J}(\omega)}{(13)}
+where $\mathbb {J}(\omega)$ is given by equation (8).
+
+To begin, we introduce a sample in parameter space, $S_N = {\mu_1 , \mu_2 , . . . , \mu_N }$
+with $N << \cal N$. Each $\mu_i , i = 1, . . . , N ,$ belongs in the parameter set D. For our parameter set we choose $D = [0.1, 10.0]^4 \times [0.01, 1.0],$ that is, $0.1 \leq k^i \leq 10.0, i =1, . . . , 4$ for the conductivities, and $0.01 \leq Bi \leq 1.0$ for the Biot number. We then introduce the reduced-basis space as:
+\equaframe{ W_{N} = span \big( u_{\cal N} (\mu_1),u_{\cal N} (\mu_2),...,u_{\cal N} (\mu_N) \big)}{(14)}
+where $u_{\cal N} (\mu_i)$ is the finite-element solution for $\mu = \mu_i$.
+To simplify the notation, we define $\xi_i \in X$ as $\xi_i  = u_{\cal N} (\mu_i), i = 1, . . . , N $; we can then write $W_N = span \big(\xi_i , i = 1, . . . , N \big)$. Which means that $\forall v_N \in W_N$ we have:
+\equaframe{ v_{N} = \sum_{i=0}^N \beta^j \xi^j,}{(15)}
+for some unique choice of $\beta^j \in R, j = 1, . . . , N $. (We implicitly assume that the $\xi , i = 1, . . . , N,$ are linearly independent; it follows that $W_N$ is an N dimensional subspace of $X_{\cal N}$ .) In the reduced-basis approach we look for an approximation $u_{\cal N} (\mu)$ to $u_{ N} (\mu)$ (which for our purposes here we presume is arbitrarily close to $u^{e} (\mu))$ in $W_N$ ; in particular, we express $u_N (\mu)$ as:
+\equaframe{ u_{N}(\mu) = \sum_{i=0}^N u_{N}^j \xi^j,}{(16)}
+We denote by $u_N (\mu) \in R^N$ the coefficient vector $(u^1_N , . . . , u^N
+_N )$. The premise — or hope — is that we should be able to accurately represent the solution at some new point in parameter space,$\mu$, as an appropriate linear combination of
+solutions previously computed at a small number of points in parameter space (the $\mu_i , i = 1, . . . , N )$. But how do we find this appropriate linear combination? And how good is it? And how do we compute our approximation efficieWe developntly? The energy principle is crucial here (though more generally the weak form would suffice). To wit, we apply the classical Rayleigh-Ritz procedure to define
+\equaframe{ u_{ N} (\mu)  = argmin_{\omega_N \in W_{ N}} \mathbb {J}(\omega_N)}{(17)}
+alternatively we can apply Galerkin projection to obtain the equivalent statement
+\equaframe{ a(u_{ N} (\mu), v; \mu) = l(v) \quad \forall v \in W_N}{(18)}
+The output can then be calculated from
+\equaframe{ T_{root}^{N}(\mu) = l^o(u_{N}(\mu))} {(19)}
+We now study this approximation in more detail.
+\section[Question a: Best solution approximation in the reduced-basis space]{\uline{Best solution approximation in the reduced-basis space:}}
+Given the energy norm defined as follow:
+$$\triplebarre{.} = a(.,\mu)^{\frac 1 2}$$
+We write $\quad \forall w_N \in W_N$:
+$$\triplebarre{u(\mu)-w_N} = a(u(\mu)-w_N,\mu)^{\frac 1 2}$$
+$\iff$:
+$$\triplebarre{u(\mu)-w_N}^2 = a(u(\mu)-w_N,\mu)$$
+$\iff$:
+$$\triplebarre{u(\mu)-w_N}^2 = a(u(\mu),\mu)-2a(u(\mu),w_N,\mu)+a(w_N,\mu)$$
+$\iff$:
+$$\triplebarre{u(\mu)-w_N}^2 = a(u(\mu),\mu)+ 2(-a(u(\mu),w_N,\mu)+\frac {a(w_N,\mu)}{2})$$
+Given that $a(u_N(\mu),w_N,\mu) = l(w_N)$ according to (18):
+$$\triplebarre{u(\mu)-w_N}^2 = a(u(\mu),\mu)+ 2(-l(w_N)+\frac {a(w_N,\mu)}{2})$$
+According to (17), 
+$$\frac {a(u_N(\mu),\mu)}{2}-l(u_N(\mu)) \leq \frac {a(w_N,\mu)}{2}-l(w_N) \quad \forall w_N \in W_N $$
+Then we replace and we obtain the inequality:
+$$\triplebarre{u(\mu)-w_N}^2 \geq a(u(\mu),\mu)+ 2(-l(u_N(\mu))+\frac {a(u_N(\mu),\mu)}{2}$$
+We replace $a(u_N(\mu),u_N,\mu) = l(u_N(\mu))$ according to (18):
+$$\triplebarre{u(\mu)-w_N}^2 \geq a(u(\mu)-u_N(\mu),\mu)$$
+Which gives us the result:
+\equaframe{ \triplebarre{u(\mu)-w_N} \geq \triplebarre{u(\mu)-u_N(\mu)}} {(20)}
+
+This inequality indicates that out of all the possible choices of $w_N$ in the space $W_N$, the reduced basis method defined above will choose the best one (in the energy norm). Equivalently, we can say that even if we knew the solution $u(\mu)$, we would not be able to find a better approximation to $u(\mu)$ in $W_N$ in the energy norm than $u_N (\mu)$.
+
+\section[Question b: Best output approximation in the reduced-basis space]{\uline{Best output approximation in the reduced-basis space:}}
+
+We know that:
+$$\triplebarre{u(\mu)-u_N(\mu)}^2 = a(u(\mu)-u_N(\mu),\mu)$$
+$\iff$
+$$\triplebarre{u(\mu)-u_N(\mu)}^2 = a(u(\mu),\mu) -2 a(u(\mu),u_N(\mu),\mu)+ a(u_N(\mu),\mu)$$
+We replace the terms using equation (9) and (18) and we obtain:
+$$\triplebarre{u(\mu)-u_N(\mu)}^2 = l(u(\mu)) -2 l(u_N(\mu))+ l(u_N(\mu))$$
+$\iff$
+$$\triplebarre{u(\mu)-u_N(\mu)}^2 = l(u(\mu)) - l(u_N(\mu))$$
+According to the definition given in (10) and (19) we have the result:
+\equaframe{ \triplebarre{u(\mu)-u_N(\mu)}^2 = T_{root}(\mu)-T_{root}^N(\mu)} {(21)}
+
+Combining this result to (20), this equality indicates that out of all the possible choices of $w_N$ in the space $W_N$, the reduced basis method defined above will choose the best one (in the energy norm) and the related output $T_{root}^N(\mu)$ is a good approximation to $T_{root}(\mu)$. 
+
+\section[Question c: Large scale and reduced-order model]{\uline{Large scale and reduced-order model:}}
+We know according to (16) that:
+\equaframe{ u_{N}(\mu) = \sum_{i=0}^N u_{N}^j \xi^j,}{}
+Also, the exact solution (finite element solution) can be expressed in the $\mathbb{H}^1 basis$ as:
+\equaframe{ u_{\cal N}(\mu) = \sum_{j=0}^{\cal N} u_{\cal N}^i \phi^i,}{}
+Both approximations are equal at $\mu_i$ thus:
+\equaframe{ u_{\cal N}(\mu_j) = u_{N}(\mu_j) = \xi^j = \sum_{k=0}^{\cal N} u_{\cal N}^i \phi^i = Z_N^T \phi^i,}{}
+and \equaframe{ u_{\cal N}(\mu) = Z_N u_{N}(\mu) }{}
+
+With $Z_N$ is an ${\cal {N}} \times N$ matrix, the $j_{th}$ column of which is $u_N (\mu_j)$ (the nodal values of $u_{\cal N} (\mu_j)$. As convention for what is comingbelow we consider $\big(a(\phi_i,\phi_j)\big)_{i,j} $ a matrix of composed of $a(\phi_i,\phi_j) elements$
+According to (11):
+$$A_{\cal N}(\mu) = \big(a(\phi_i,\phi_j)\big)_{i,j} = {(l(\phi_j))}_j = F_{\cal N}$$
+which implies:
+$$A_{\cal N}(\mu) u_{\cal N}(\mu)= \big(a(\phi_i,\phi_j)\big)_{i,j} Z_N u_{N}(\mu) = {(l(\phi_j))}_j = F_{\cal N}(\mu)$$
+$\implies$:
+$$A_{\cal N}(\mu) u_{\cal N}(\mu)= \big(a(Z_N ^T \phi_i,\phi_j)\big)_{i,j} u_{N}(\mu) = {(l(\phi_j))}_j = F_{\cal N}(\mu)$$
+We multiply by $Z_{N}^T$:
+$$ Z_{N}^T A_{\cal N}(\mu) Z_{N} u_{ N}(\mu)= \big(a(Z_{N}^T \phi_j,\xi_j)\big)_{i,j} u_{N}(\mu) = Z_{N}^T  {(l(\phi_j))}_j = Z_{N}^T F_{\cal N}(\mu)$$
+Then the result:
+$$ Z_{N}^T A_{\cal N}(\mu) Z_{N} u_{ N}(\mu)= \big(a(\xi_i,\xi_j)\big)_{i,j} u_{N}(\mu) =  {(l(Z_{N}^T \phi_j))}_j = Z_{N}^T F_{\cal N}$$
+Given that $\big(a(\xi_i,\xi_j)\big)_{i,j} = A_N(\mu)$ and ${(l(Z_{N}^T \phi_j))}_j = {(l(\xi_i))}_i = F_N(\mu)$ we conclude the result:
+\equaframe{ Z_{N}^T A_{\cal N}(\mu) Z_{N} u_{ N}(\mu) = Z_N^T F_{\cal N}(\mu) }{}
+Thus $u_{ N}(\mu)$ satisfies:
+\equaframe{  A_{ N}(\mu)u_{ N}(\mu) = F_{N}(\mu) }{(22)}
+With:
+$$A_{ N}(\mu) = Z_{N}^T A_{\cal N}(\mu) Z_{N}$$
+And:
+$$F_{ N}(\mu)=Z_N^T F_{\cal N}(\mu)$$
+With the same elements and starting from (12) we have:
+\equaframe{ T_{root}^{\cal N}(\mu) = L_{\cal N}^T u_{\cal N}(\mu)} {}
+Thus:
+\equaframe{ T_{root}^{\cal N}(\mu) = L_{\cal N}^T Z_N u_{N}(\mu)} {}
+And then we conclude that $u_{ N}(\mu)$ satisfies:
+\equaframe{ T_{root}^{N}(\mu) = L_{N}^T  u_{N}(\mu)} {(23)}
+With:
+$$L_{ N}^T(\mu)= L_{\cal N}^T Z_N $$
+
+\section[Question d: Parametric coercivity]{\uline{Parametric coercivity:}}
+
+Starting from $a(\omega,v,\mu)$ $\forall v \in X$ and $\mu \in D$:
+\equaframe{ a(\omega, v; \mu) = \sum_{i=0}^4 \int_{\Omega^i} k^i \nabla \omega . \nabla v dA 
+ + Bi\int_{\Gamma_{/\Gamma_{root}}} \omega . v dS
+  }{}
+
+We can write:
+
+\equaframe{ a(\omega, v; \mu) = \sum_{q=0}^5 \Theta^q(\mu)  a^q(\omega,v) }{(24)}
+
+With:
+$\Theta^q(\mu)$ is the $q_{th}$ element of the following list:
+ $${k^0,k^1,k^2,k^3,k^4,Bi}$$
+And:
+$$a^q(\omega,v) = \int_{\Omega^q} \nabla \omega . \nabla v dA , q= 0,1,...,4$$
+$$a^5(\omega,v) = \int_{\Gamma_{/\Gamma_{root}}} \omega . v dS$$
+$A^{\cal N}(\mu)$ is assembled as follows:
+
+$$A_{\cal N}(\mu) = \big(a(\phi_i,\phi_j)\big)_{i,j}$$
+
+we replace in (24):
+\equaframe{ A_{\cal N}(\mu) = \big(a(\phi_i,\phi_j)\big)_{i,j} = \sum_{q=0}^5 \Theta^q(\mu)   \big(a^q(\phi_i,\phi_j) \big)_{i,j}}{}
+Then the seeked expression:
+\equaframe{ A_{\cal N}(\mu) =  \sum_{q=0}^5 \Theta^q(\mu)   A_{\cal N}^q}{(25)}
+
+With:
+$$A_{\cal N}^q = \big(a^q(\phi_i,\phi_j) \big)_{i,j}, \quad (\phi_i)_i \, is \, the \, basis \, of \, X $$
+
+We already proved that:
+$$A_{ N}(\mu) = Z_{N}^T A_{\cal N}(\mu) Z_{N}$$
+So we can deduce that:
+\equaframe{ A_{N}(\mu) =  \sum_{q=0}^5 \Theta^q(\mu)   A_{N}^q}{(26)}
+With:
+$$A_{N}^q = Z_N^T A_{\cal N}^q Z_N,$$
+
+
+\section[Question e: Bounded condition number]{\uline{Bounded condition number:}}
+The coercivity and continuity constants of the bilinear form for the continuous problem are denoted by $\alpha(\mu)$ and $\gamma(\mu)$, respectively.
+
+First we calculate the Rayleigh Quotient $R(A_N,v)$:
+
+$$R(A_N,v) = \frac {V_N^T A_N(\mu) V_N} {V_N^T V_N} $$
+We now assume that the basis function $ξi, i = 1, . . . , N,$ are orthonormalized. And:
+$$V_N  = \sum_{i=1}^N V^i_N \xi_i$$
+So:
+$$R(A_N,v) = \frac {V_N^T a(\xi_i,\xi_j,\mu) V_N} {V_N^T V_N} = \frac {a(V_N,V_N,\mu)} {V_N^T V_N} $$
+
+In one hand we know that A is symetric so:
+ $$ \lambda_{min} \leq R(A_N,v)  = \frac {a(V_N,V_N,\mu)} {V_N^T V_N} \leq \lambda_{max} $$
+With $\lambda_{min}$ and $\lambda_{max}$ is its smallest and greatest eigen values.
+In the other hand according to the definition of $\alpha(\mu)$ and $\gamma(\mu)$, we have:
+$$\alpha(\mu) = inf_{V \in R^N} \frac {a(V_N,V_N,\mu)} {V_N^T V_N} \leq \lambda_{min}$$
+And:
+$$ \lambda_{max} \leq sup_{V_N \in R^N} sup_{W_N \in R^N} \frac {a(W_N,V_N,\mu)} {{\norm{V_N}}_{R^N} {\norm {W_N}}_{R^N}} = \gamma(\mu)$$
+
+Knowing that A is symetrical thus normal we conclude:
+$$ "comdition \, number" = \frac {\lambda_{max}}{\lambda_{min}} \leq \frac {\gamma(\mu)}{\alpha(\mu)} $$
+
+
+
+
+
+
+
+
+
+

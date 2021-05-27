@@ -1,0 +1,41 @@
+%{GitHub Commit: \number \month .\number\year.verSubstitution}
+\documentclass {report}
+\input {./chapters/preamble}
+\begin{document}
+\baselineskip=0.5cm
+\begin{center}
+\huge{El Houssaini Youness}
+\end{center}
+\vspace{4cm}
+\begin{center}
+\Huge{\bf  CS3 (C. Prud'homme) : \\ \  \\Model Order Reduction Techniques \\
+Problem Set 1: RB for Linear Affine Elliptic Problems \\
+Design of a Thermal Fin}
+\end{center}
+\vspace{7cm}
+\hspace{10.5cm}\Large{Master 2 CSMI \vspace{0.2cm}\\ \hspace*{5.6cm}Academic year 2020-2021 - Semester 1}\normalsize
+\tableofcontents
+\newpage
+	
+%\chapter[Introduction]{\uline{Introduction}}
+\includefrom{./chapters/}{chapter_1}
+
+%\chapter[Finite Element Approximation]{\uline{Finite Element Approximation}}
+\includefrom{./chapters/}{chapter_2}
+	
+
+%\chapter[Reduced-Basis Approximation]{\uline{Reduced-Basis Approximation}}
+\includefrom{./chapters/}{chapter_3}
+
+
+%\chapter[BONUS and Conclusion]{\uline{BONUS and Conclusion}}
+\includefrom{./chapters/}{chapter_4}
+
+
+\bibliographystyle{abbrv}
+\nocite{*}
+\bibliography{biblio}
+
+
+
+\end{document}
